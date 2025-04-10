@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalization Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .output {
+            margin-top: 20px;
+        }
+
+        .output img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .output span {
+            display: inline-block;
+            background: #f1f1f1;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personalization Options</h1>
+        <form id="personalizationForm">
+            <!-- Upload Design Section -->
+            <div class="form-group">
+                <label for="designUpload">Upload a Design You Want to Replicate:</label>
+                <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <!-- Monogramming Section -->
+            <div class="form-group">
+                <label for="monogramText">Enter Initials for Monogramming:</label>
+                <input type="text" id="monogramText" maxlength="3" placeholder="E.g., ABC">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" id="submitButton">Submit</button>
+        </form>
+
+        <!-- Output Section -->
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            const designUpload = document.getElementById('designUpload').files[0];
+            const monogramText = document.getElementById('monogramText').value;
+            const outputDiv = document.getElementById('output');
+
+            outputDiv.innerHTML = ''; // Clear previous output
+
+            // Display uploaded design
+            if (designUpload) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    outputDiv.appendChild(img);
+                };
+                reader.readAsDataURL(designUpload);
+            } else {
+                alert('Please upload a design image.');
+                return;
+            }
+
+            // Display monogram text
+            if (monogramText.trim()) {
+                const monogramSpan = document.createElement('span');
+                monogramSpan.textContent = `Monogram: ${monogramText.toUpperCase()}`;
+                outputDiv.appendChild(monogramSpan);
+            } else {
+                alert('Please enter initials for monogramming.');
+            }
+        });
+    </script>
+</body>
+</html>
